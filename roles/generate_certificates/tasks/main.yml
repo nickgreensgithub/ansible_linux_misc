@@ -1,0 +1,4 @@
+---
+- { include: install_dependencies.yml, become: yes }
+- { include: generate_ca_certificate_and_key.yml, become: yes }
+- { include: generate_ssl_tls_certificates.yml, become: yes }

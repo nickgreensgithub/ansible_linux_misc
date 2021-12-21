@@ -1,0 +1,15 @@
+---
+  - name: Create mount point
+    ansible.builtin.file:
+      path: "{{ item.PATH }}"
+      state: directory
+    loop: "{{ mounts }}"
+
+  - name: Mount volume
+    ansible.posix.mount:
+      path: "{{ item.PATH }}"
+      src: UUID={{ item.UUID }}
+      fstype: "{{ item.FILESYSTEM }}"
+      opts: defaults
+      state: mounted
+    loop: "{{ mounts }}"

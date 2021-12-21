@@ -1,0 +1,14 @@
+---
+- name: create server-csr.json
+  ansible.builtin.template:
+    src: server-csr.json.j2
+    dest: "{{ CERTS_LOCATION }}/server-csr.json"
+
+- name: create SSL cert and key
+  ansible.builtin.shell:
+    chdir: "{{ CERTS_LOCATION }}"
+    cmd: 
+      cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=web-servers server-csr.json | cfssljson -bare server
+    creates: 
+      - "{{ CERTS_LOCATION }}/server-key.pem"
+      - "{{ CERTS_LOCATION }}/server.pem"

@@ -1,0 +1,6 @@
+---
+- name: Install python3 packages
+  ansible.builtin.pip:
+    executable: pip3
+    name: '{{ item }}'
+  with_items: "{{ PACKAGES | default([]) }}"
